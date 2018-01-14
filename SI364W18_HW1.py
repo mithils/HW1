@@ -47,6 +47,35 @@ def ask_question():
     else:
         return s
 
+@app.route("/f1api",methods=["GET","POST"])
+def problem_four():
+    form_string = """<br>Historical F1 Driver Season Results<br>
+    <form action="http://localhost:5000/f1api" method='POST'>
+    <br>
+
+    Enter a season(year):<input type="text" name="year">
+    <br>
+    <input type="checkbox" name="driver" value="hamilton">Hamilton<br>
+    <input type="checkbox" name="driver" value="vettel">Vettel<br>
+    <input type="checkbox" name="driver" value="alonso">Alonso<br>
+    <input type="checkbox" name="driver" value="perez">Perez<br>
+    <input type="submit" value="Submit">
+    </form>
+"""
+
+
+
+    if request.method == 'POST':
+        year = request.form['year']
+        driver = request.form.get('driver')
+        baseurl = "http://ergast.com/api/f1/{0}/drivers/{1}/results".format(year,driver)
+
+        response = requests.get(baseurl)
+
+        return form_string + "<br><br>"+"{0}'s {1} Season Results:".format(driver.upper(),year) + "<br><br>"+response.text
+    else:
+        return form_string
+
 
 
 if __name__ == '__main__':
