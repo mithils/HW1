@@ -30,6 +30,24 @@ def movie_details(movie):
 
     return response.text
 
+@app.route('/question',methods=["GET","POST"])
+def ask_question():
+    s = """<br><br>
+    <form action="http://localhost:5000/question" method='POST'>
+    Number:<br>
+    <input type="text" name="number"> Enter a number:
+    <br>
+    <input type="submit" value="Submit">
+    </form>
+"""
+    if request.method == "POST":
+        response = request.form['number']  # request.form.get("phrase","")
+        number = int(response) * 2
+        return s + "<br><br>" + str(number)
+    else:
+        return s
+
+
 
 if __name__ == '__main__':
     app.run()
@@ -57,9 +75,15 @@ if __name__ == '__main__':
 
 ## [PROBLEM 3] - 250 points
 
-## Edit the above Flask application code so that if you run the application locally and got to the URL http://localhost:5000/question, you see a form that asks you to enter your favorite number.
-## Once you enter a number and submit it to the form, you should then see a web page that says "Double your favorite number is <number>". For example, if you enter 2 into the form, you should then see a page that says "Double your favorite number is 4". Careful about types in your Python code!
+## Edit the above Flask application code so that if you run the application locally and got to the URL http://localhost:5000/question,
+# you see a form that asks you to enter your favorite number.
+## Once you enter a number and submit it to the form,
+# you should then see a web page that says "Double your favorite number is <number>". For example,
+# if you enter 2 into the form, you should then see a page that says "Double your favorite number is 4".
+# Careful about types in your Python code!
 ## You can assume a user will always enter a number only.
+
+
 
 
 ## [PROBLEM 4] - 350 points
